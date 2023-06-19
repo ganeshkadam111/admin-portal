@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DragDropComponent } from './components/drag-drop/drag-drop.component';
 import { TeamManagementComponent } from './components/team-management/team-management.component';
 import { MaterialModule } from './shared/material.module';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
@@ -14,7 +13,6 @@ import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.c
 @NgModule({
   declarations: [
     AppComponent,
-    DragDropComponent,
     TeamManagementComponent,
     ConfirmDialogComponent
   ],
