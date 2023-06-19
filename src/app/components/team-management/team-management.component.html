@@ -1,0 +1,73 @@
+<div class="container">
+  <form [formGroup]="addForm" (ngSubmit)="addFormSubmit(addForm.value)" class="row mt-5">
+    <div class="col-sm-2 d-flex align-items-center w-auto">
+      <label><strong>Team Lead Name:</strong></label>
+    </div>
+    <div class="col-sm-3 ">
+      <mat-form-field>
+        <mat-label>Lead Name:
+        </mat-label>
+        <mat-select formControlName="teamLead" [disabled]="isEdit">
+          <mat-option>Select Team Lead</mat-option>
+          <mat-option *ngFor="let item of teamLeadList" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f.teamLead.errors && (f.teamLead.dirty || f.teamLead.touched) && f.teamLead.hasError('required')">Please choose an Team Lead name</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field>
+        <mat-label>Team Name</mat-label>
+        <input type="text" matInput formControlName="teamName" placeholder="Enter Team Name">
+        <mat-error *ngIf="f.teamName.errors && (f.teamName.dirty || f.teamName.touched)&& f.teamName.hasError('required')">
+          Team Name <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <button type="submit" mat-raised-button color="primary" [disabled]="!addForm.valid" *ngIf="!isEdit">Add</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!addForm.valid" *ngIf="isEdit">Edit</button>
+    </div>
+  </form>
+
+  <div class="row pt-5" cdkDropListGroup>
+    <div class="col-sm-4" cdkDropList [cdkDropListData]="items.teamMember" (cdkDropListDropped)="drop($event)"
+      *ngFor="let items of teamList;let j = index;">
+      <div class="card example-list" style="margin-top:2%">
+        <div class="card-header" *ngIf="items.teamName">
+          <div class="row">
+            <div class="col-sm-6 ">
+              <h2 class="card-title bold">{{items.teamName}}</h2>
+            </div>
+            <div class="col-sm-6">
+              <button mat-icon-button color="primary" (click)="editTeamLead(items.teamLead, items.teamName)"
+                matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button  color="primary" (click)="deleteTeam(items.teamLead)" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <h3 class="mb-2 bold">{{items.teamLead?.name}}</h3>
+          </div>
+        </div>
+        <div class="card-header" *ngIf="!items.teamName">
+          <h2 class="bold">No Lead Members</h2>
+        </div>
+        <div class="card-body list-item">
+          <div class="example-box" cdkDrag [cdkDragData]="item"
+            *ngFor="let item of items.teamMember;let i = index;">
+            <div class="w-10 drag-icon">
+              <i *ngIf="!item.isDisable" class="material-icons disable">reorder</i>
+              <i  class="material-icons" cdkDragHandle>reorder</i>
+            </div>
+            <div class="w-100 drag-content">
+              <mat-checkbox id="nomember+{{i+1}}" (change)="item.isDisable = !item.isDisable">
+                {{item.name}}</mat-checkbox>  
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
